@@ -1,5 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Model;
 using System.Text.RegularExpressions;
+
+// Scaffold - DbContext "Server=BRD-3917L13-L\SQLEXPRESS;Database=Organization;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DBModels - f
+
+//    Scaffold - DbContext "connection-string" MySql.EntityFrameworkCore - OutputDir sakila - f
+
+// Scaffold-DbContext "Server=BRD-3917L13-L\SQLEXPRESS;Database=Organization;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DBModels - Tables "Employee" - f
+
+// Scaffold-DbContext "Server=BRD-3917L13-L\SQLEXPRESS;Database=Organization;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DBModels
 
 namespace WebAPI.Controllers
 {
@@ -15,16 +25,19 @@ namespace WebAPI.Controllers
             return Ok();
         }*/
 
+
+
         /// <summary>
         /// Fetching the Employee Details using GET() method
         /// </summary>
         /// <param name="employee"></param>
         /// <returns></returns>
+        
         [HttpGet("Fetch Employee Details")]
-        public Employee FetchEmployeeDetails(Employee employee)
+        public string FetchEmployeeDetails()
         {
-            employee.employeeCurrentProject = "";
-            return employee;
+            //employee.employeeCurrentProject = "";
+            return "PASS";
         }
 
         /// <summary>
@@ -32,7 +45,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="employee">Object to store the employee details</param>
         /// <returns></returns>
-        [HttpPost("Add Employee Details")]
+        [HttpPost("AddEmployeeDetails")]
         public Employee AddEmployeeDetails(Employee employee)
         {
             employee.employeeName = "Aryan";
@@ -56,6 +69,7 @@ namespace WebAPI.Controllers
             return employee;
         }
 
+        
         /// <summary>
         /// Deleting an Employee using DELETE() method
         /// </summary>
