@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="employee">Object to store the employee details</param>
         /// <returns></returns>
-        [HttpPost("AddEmployeeDetails")]
+        [HttpPost("Add Employee Details")]
         public Employee AddEmployeeDetails(Employee employee)
         {
             employee.employeeName = "Aryan";
