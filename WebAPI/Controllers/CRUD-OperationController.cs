@@ -17,26 +17,16 @@ namespace WebAPI.Controllers
     /// Performing the basic CRUD Operations using Web API
     /// </summary>
     [ApiController]
-    [Route("CRUD Operations")]
+    [Route("crud-operations")]
     public class CRUD_OperationController : ControllerBase
-    {
-        /*public IActionResult Index()
-        {
-            return Ok();
-        }*/
-
-
-
+    {        
         /// <summary>
         /// Fetching the Employee Details using GET() method
         /// </summary>
-        /// <param name="employee"></param>
-        /// <returns></returns>
-        
-        [HttpGet("Fetch Employee Details")]
+        /// <returns></returns>        
+        [HttpGet("fetch-details")]
         public string FetchEmployeeDetails()
         {
-            //employee.employeeCurrentProject = "";
             return "PASS";
         }
 
@@ -45,7 +35,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="employee">Object to store the employee details</param>
         /// <returns></returns>
-        [HttpPost("Add Employee Details")]
+        [HttpPost("add-details")]
         public Employee AddEmployeeDetails(Employee employee)
         {
             employee.employeeName = "Aryan";
@@ -59,9 +49,9 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Updating the Employee Details using PUT() method
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="employee">object to whose refrence the updates will be made.</param>
         /// <returns></returns>
-        [HttpPut("Update Employee Details")]
+        [HttpPut("update-details")]
         public Employee UpdateEmployeeDetails(Employee employee)
         {
             employee.employeeName = "Aryan Gupta";
@@ -69,13 +59,13 @@ namespace WebAPI.Controllers
             return employee;
         }
 
-        
+
         /// <summary>
         /// Deleting an Employee using DELETE() method
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="employee">object to whose refrence the deletion will be made.</param>
         /// <returns></returns>
-        [HttpDelete("Remove Employee Details")]
+        [HttpDelete("remove-details")]
         public Employee RemoveEmployeeDetails(Employee employee)
         {
             employee.employeeName = "Aryan";

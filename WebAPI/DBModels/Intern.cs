@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Model.DBModels;
+namespace WebAPI.DBModels;
 
 public partial class Intern
 {
@@ -11,5 +11,5 @@ public partial class Intern
 
     public string Mentor { get; set; } = null!;
 
-    public string? CurrentTrainings { get; set; } = null!;
+    public string? CurrentTrainings { get; set; }
 }
