@@ -11,8 +11,6 @@ namespace Model.Request
     /// </summary>
     public class AddInternRequest
     {
-        public int? InternId { get; set; }
-
         public string? InternName { get; set; }
 
         public string Mentor { get; set; } = null!;

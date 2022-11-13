@@ -1,9 +1,26 @@
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Middleware.CustomMiddlewares;
 using Model.DBModels;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddFluentValidation(s =>
+{
+    s.RegisterValidatorsFromAssemblyContaining<Program>();
+    s.AutomaticValidationEnabled = false;
+
+    /*
+        // Validate child properties and root collection elements
+        s.ImplicitlyValidateChildProperties = true;
+        s.ImplicitlyValidateRootCollectionElements = true;
+
+        // Automatic registration of validators in assembly
+        s.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+    */
+});
 
 builder.Services.AddDbContext<OrganizationContext>(options =>
     options.UseSqlServer("Server=BRD-3917L13-L\\SQLEXPRESS;Database=Organization;Trusted_Connection=True;"));
@@ -48,7 +65,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
 }
+
+
 
 app.UseHttpsRedirection();
 
