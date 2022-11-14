@@ -1,16 +1,23 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Middleware.CustomMiddlewares;
 using Model.DBModels;
+using Model.DeveloperModels;
+using Model.Request;
+using Model.ResponseModels;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddFluentValidation(s =>
 {
-    s.RegisterValidatorsFromAssemblyContaining<Program>();
-    s.AutomaticValidationEnabled = false;
+    /*s.RegisterValidatorsFromAssemblyContaining<Program>();
+    s.AutomaticValidationEnabled = false;*/
+
+    builder.Services.AddControllers().AddFluentValidation();
+    builder.Services.AddScoped<IValidator<AddInternRequest>, DeveloperValidation>();
 
     /*
         // Validate child properties and root collection elements

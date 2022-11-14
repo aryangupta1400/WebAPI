@@ -8,7 +8,7 @@ using Model.ResponseModels;
 namespace WebAPI.Controllers
 {
     /// <summary>
-    /// Implementing WebAPI using on DB 
+    /// Implementing WebAPI using DB 
     /// </summary>
     [ApiController]
     [Route("interns")]
@@ -32,15 +32,20 @@ namespace WebAPI.Controllers
         /// Fetching all Interns Details
         /// </summary>
         /// <returns></returns>
-        [HttpGet("fetch-intern-details")]
+        [HttpGet]
         public async Task<List<InternDTO>> FetchInternDetails()
         {
+            #region Fetching details for insters
+            
+            //Fetching all inter details from DB
             List<InternDTO> interns = await organizationContext.Interns.Select(i => new InternDTO()
             {
                 InternId = i.InternId,
                 Mentor = i.Mentor,
                 CurrentTrainings = i.CurrentTrainings
             }).ToListAsync();
+
+            #endregion
 
             return interns;
         }
@@ -49,11 +54,11 @@ namespace WebAPI.Controllers
         /// Adding a new Intern's Details to DB
         /// </summary>
         /// <returns></returns>
-        [HttpPost("add-intern-details")]
+        [HttpPost]
         public async Task<Intern> AddInternDetails(AddInternRequest addInternRequest)
         {
             Intern intern = new Intern()
-            {   
+            {
                 InternName = addInternRequest.InternName,
                 Mentor = addInternRequest.Mentor,
                 CurrentTrainings = addInternRequest.CurrentTrainings
@@ -62,10 +67,10 @@ namespace WebAPI.Controllers
             organizationContext.Interns.Add(intern);
             await organizationContext.SaveChangesAsync();
 
-            InternDTO internDTO = new InternDTO() 
+            InternDTO internDTO = new InternDTO()
             {
-                InternId=intern.InternId,
-                Mentor=intern.Mentor                
+                InternId = intern.InternId,
+                Mentor = intern.Mentor
             };
             return intern;
         }
@@ -75,9 +80,9 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="internDTO">Object to refrence existing object and print output</param>
         /// <returns></returns>
-        [HttpPut("update-intern-details")]
-        public async Task<InternDTO> UpdateInternDetails(InternDTO internDTO)
-        {            
+        [HttpPut("{interID}")]
+        public async Task<InternDTO> UpdateInternDetails(int interID, InternDTO internDTO)
+        {
             var existingIntern = organizationContext.Interns.Where(i => i.InternId == internDTO.InternId).FirstOrDefault<Intern>();
 
             if (existingIntern != null)
@@ -99,9 +104,9 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="internID"></param>
         /// <returns></returns>
-        [HttpDelete("delete-intern-details")]
+        [HttpDelete("{interID}")]
         public async Task<string> RemoveInternDetails(int internID)
-        {       
+        {
             var intern = await organizationContext.Interns.FindAsync(internID);
 
             if (intern == null)
