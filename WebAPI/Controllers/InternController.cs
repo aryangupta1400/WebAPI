@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
         {
             #region Fetching details for insters
             
-            //Fetching all inter details from DB
+            //Fetching all intern details from DB
             List<InternDTO> interns = await organizationContext.Interns.Select(i => new InternDTO()
             {
                 InternId = i.InternId,
@@ -64,6 +64,7 @@ namespace WebAPI.Controllers
                 CurrentTrainings = addInternRequest.CurrentTrainings
             };
 
+            //Adding intern details to DB
             organizationContext.Interns.Add(intern);
             await organizationContext.SaveChangesAsync();
 
@@ -81,10 +82,13 @@ namespace WebAPI.Controllers
         /// <param name="internDTO">Object to refrence existing object and print output</param>
         /// <returns></returns>
         [HttpPut("{interID}")]
-        public async Task<InternDTO> UpdateInternDetails(int interID, InternDTO internDTO)
+        public async Task<InternDTO> UpdateInternDetails(int interID)
         {
-            var existingIntern = organizationContext.Interns.Where(i => i.InternId == internDTO.InternId).FirstOrDefault<Intern>();
+            InternDTO internDTO = new InternDTO();            
 
+            var existingIntern = organizationContext.Interns.Where(i => i.InternId == interID).FirstOrDefault<Intern>();
+
+            //Updating intern details to DB
             if (existingIntern != null)
             {
                 existingIntern.Mentor = internDTO.Mentor;
@@ -112,6 +116,7 @@ namespace WebAPI.Controllers
             if (intern == null)
                 return "Intern NOT Found.";
 
+            //Deleting intern details to DB
             organizationContext.Interns.Remove(intern);
             await organizationContext.SaveChangesAsync();
 
