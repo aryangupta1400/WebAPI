@@ -5,6 +5,9 @@ using Model.Request;
 using Model.RequestModels;
 using Model.ResponseModels;
 
+// Scaffold-DbContext "Server=BRD-3917L13-L\SQLEXPRESS;Database=Organization;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DBModels -force
+
+
 namespace WebAPI.Controllers
 {
     /// <summary>
@@ -55,7 +58,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<Intern> AddInternDetails(AddInternRequest addInternRequest)
+        public async Task<InternDTO> AddInternDetails(AddInternRequest addInternRequest)
         {
             Intern intern = new Intern()
             {
@@ -71,28 +74,35 @@ namespace WebAPI.Controllers
             InternDTO internDTO = new InternDTO()
             {
                 InternId = intern.InternId,
-                Mentor = intern.Mentor
+                Mentor = intern.Mentor,
+                CurrentTrainings = intern.CurrentTrainings
             };
-            return intern;
+            return internDTO;
         }
 
         /// <summary>
         /// Updating an Intern's Detail
         /// </summary>
-        /// <param name="internDTO">Object to refrence existing object and print output</param>
+        /// <param name="interID">Which Intern value need to be updated</param>
+        /// <param name="updateInternRequest">Object to refrence existing object and print output</param>
         /// <returns></returns>
         [HttpPut("{interID}")]
-        public async Task<InternDTO> UpdateInternDetails(int interID)
+        public async Task<InternDTO> UpdateInternDetails(int interID, UpdateInternRequest updateInternRequest)
         {
-            InternDTO internDTO = new InternDTO();            
+            InternDTO internDTO = new InternDTO()
+            {
+                InternId = interID,
+                Mentor = updateInternRequest.Mentor,
+                CurrentTrainings = updateInternRequest.CurrentTrainings
+            };            
 
             var existingIntern = organizationContext.Interns.Where(i => i.InternId == interID).FirstOrDefault<Intern>();
 
             //Updating intern details to DB
             if (existingIntern != null)
             {
-                existingIntern.Mentor = internDTO.Mentor;
-                existingIntern.CurrentTrainings = internDTO.CurrentTrainings;
+                existingIntern.Mentor = updateInternRequest.Mentor;
+                existingIntern.CurrentTrainings = updateInternRequest.CurrentTrainings;
 
                 await organizationContext.SaveChangesAsync();
             }

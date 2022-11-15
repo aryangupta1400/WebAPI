@@ -10,17 +10,8 @@ namespace Model.RequestModels
     /// Request to update intern details
     /// </summary>
     public class UpdateInternRequest
-    {
-        /// <summary>
-        /// Intern ID
-        /// </summary>
-        public int? InternId { get; set; }
-
-        /// <summary>
-        /// Name of Intern
-        /// </summary>
-        public string? InternName { get; set; }
-
+    {      
+        
         /// <summary>
         /// Mentor assigned
         /// </summary>
@@ -29,6 +20,6 @@ namespace Model.RequestModels
         /// <summary>
         /// Current Traings involved in
         /// </summary>
-        public string CurrentTrainings { get; set; }
+        public string? CurrentTrainings { get; set; }
     }
 }
